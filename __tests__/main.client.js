@@ -6,7 +6,7 @@ import {Authors, Groups, Posts, Categories, AuthorProfiles} from './bootstrap/co
 import {authorsList, postsList} from './bootstrap/namedQueries';
 import sinon from 'sinon';
 import {withQuery} from 'meteor/cultofcoders:grapher-react';
-import {expect} from 'chai';
+import {expect, assert} from 'chai';
 
 import PostItemContainer from './components/containers/PostItem';
 import PostItemWithDataPropContainer from './components/containers/PostItemWithDataProp';
