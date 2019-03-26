@@ -38,43 +38,65 @@ const query = createQuery('usersWithEmails', {
   <tr>
     <th>Property</th>
     <th>Valid values</th>
+    <th>Default value</th>
     <th>Description</th>
   </tr>
   <tr>
     <td>reactive</td>
     <td>true/false</td>
+    <td>`false`</td>
     <td>
-        Defaults to `false`.
         Makes your query reactive (subscribes to changes) or non-reactive, falls back to method calls.
     </td>
   </tr>
   <tr>
     <td>dataProp</td>
     <td>string</td>
+    <td>`'data'`</td>
     <td>
-        Defaults to `data`. How to properly inject data in your component, like `users` or `posts`
+        How to properly inject data in your component, like `users` or `posts`
     </td>
   </tr>
   <tr>
     <td>errorComponent</td>
     <td>React.Component (optional)</td>
-    <td>Defaults to `null`. Receives `error` object as a prop. Is rendered when subscription or method call triggered an exception</td>
+    <td>`null`</td>  
+    <td>Receives `error` object as a prop. Is rendered when subscription or method call triggered an exception</td>
   </tr>
   <tr>
     <td>loadingComponent</td>
     <td>React.Component (optional)</td>
-    <td>Defaults to `null`. Renders when the data is waiting to be loaded from the server</td>
+    <td>`null`</td>
+    <td>Renders when the data is waiting to be loaded from the server</td>
   </tr>
   <tr>
     <td>single</td>
     <td>true/false</td>
-    <td>Defaults to `false`. If your query is for a single result, then using `true` will send data as an object instead of an array</td>
+    <td>`false`</td>
+    <td>If your query is for a single result, then using `true` will send data as an object instead of an array</td>
   </tr>
   <tr>
     <td>pollingMs</td>
     <td>Number</td>
+    <td>`undefined`</td>
     <td>
-        Defaults to undefined. Only works for non-reactive queries, it constantly polls for new data every `pollingMs` miliseconds.
+        Only works for non-reactive queries, it constantly polls for new data every `pollingMs` miliseconds.
+    </td>
+  </tr>
+  <tr>
+    <td>loadOnRefetch</td>
+    <td>true/false</td>
+    <td>`true`</td>
+    <td>
+        For static (`reactive = false`) queries only, sets `isLoading` to true every time you call refetch until the data is loaded. Set this to false to only get `isLoading` on the initial fetch.
+    </td>
+  </tr>
+      <tr>
+    <td>shouldRefetch</td>
+    <td>(currentProps, nextProps) => Boolean</td>
+    <td>`undefined`</td>
+    <td>
+        For static queries only, provides a hook into `componentWillReceiveProps` to determine whether the query should be refetched or not. The function will be called with nextProps and currentProps as arguments.
     </td>
   </tr>
 </table>
@@ -94,7 +116,13 @@ const PostList = ({ data, isLoading, error }) => {
         return <div>{error.reason}</div>;
     }
 
-    return <div>{data.map(post => <li key={post._id}>{post.title}</li>)}</div>;
+    return (
+        <div>
+            {data.map(post => (
+                <li key={post._id}>{post.title}</li>
+            ))}
+        </div>
+    );
 };
 
 export default withQuery(props => {
@@ -151,7 +179,7 @@ export default withQuery(
     props => {
         return getPostLists.clone();
     },
-    { reactive: true }
+    { reactive: true },
 )(PostList);
 ```
 
@@ -166,7 +194,7 @@ const Container = withQuery(
     props => {
         return getPostLists.clone();
     },
-    { reactive: true }
+    { reactive: true },
 )(PostList);
 
 export default function() {
@@ -196,7 +224,7 @@ export default withQuery(
     props => {
         return getPostLists.clone();
     },
-    { reactive: false }
+    { reactive: false },
 )(PostList);
 ```
 
@@ -213,7 +241,7 @@ export default withQuery(
     },
     {
         single: true,
-    }
+    },
 )(UserProfile);
 ```
 
@@ -240,7 +268,7 @@ export default withQuery(
         single: true,
         errorComponent: ErrorComponent,
         loadingComponent: LoadingComponent,
-    }
+    },
 )(UserProfile);
 ```
 
@@ -269,6 +297,6 @@ export default withQuery(
     {
         errorComponent: null,
         loadingComponent: AnotherLoadingComponent,
-    }
+    },
 )(UserProfile);
 ```

@@ -1,6 +1,6 @@
 Package.describe({
     name: 'cultofcoders:grapher-react',
-    version: '0.1.3',
+    version: '0.1.5',
     // Brief, one-line summary of the package.
     summary:
         'Provides HOCs for easily wrapping components with Grapher queries',
@@ -19,7 +19,7 @@ Package.onUse(function(api) {
         'check',
         'reactive-var',
         'react-meteor-data@0.2.15',
-        'cultofcoders:grapher@1.2.8_1',
+        'cultofcoders:grapher@1.3.9_3',
         'tmeasday:check-npm-versions@0.2.0',
     ]);
 
