@@ -20,7 +20,7 @@ Package.onUse(function(api) {
         'reactive-var',
         'react-meteor-data@0.2.15',
         'cultofcoders:grapher@1.3.9_3',
-        'tmeasday:check-npm-versions@0.2.0',
+        'tmeasday:check-npm-versions@0.3.2',
     ]);
 
     api.mainModule('main.client.js', 'client');
@@ -29,13 +29,13 @@ Package.onUse(function(api) {
 
 Package.onTest(function(api) {
     api.use([
-        'cultofcoders:grapher-react',
-        'cultofcoders:grapher',
         'ecmascript',
         'mongo',
+        'cultofcoders:grapher-react',
+        'cultofcoders:grapher',
     ]);
 
-    api.use(['cultofcoders:mocha', 'practicalmeteor:chai']);
+    api.use(['meteortesting:mocha']);
 
     api.addFiles('__tests__/main.server.js', 'server');
     api.addFiles('__tests__/main.client.js', 'client');
