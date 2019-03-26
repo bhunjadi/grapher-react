@@ -152,4 +152,19 @@ describe('withTracker()', function () {
             }, 200);
         }, 100);
     });
+
+    it('[Static] setState on umounted component', (done) => {
+        const wrapper = mount(<PostItemPollingContainer />);
+        const container = wrapper.find(`StaticQuery(GrapherQuery(Post))`);
+
+        const setStateSpy = sinon.spy(container.instance(), 'setState');
+
+        wrapper.unmount();
+
+        // wait some time for promise to be executed
+        setTimeout(() => {
+            expect(setStateSpy.notCalled).to.be.equal(true, 'setState must not be called');
+            done();
+        }, 250);
+    });
 });
