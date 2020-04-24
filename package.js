@@ -18,7 +18,7 @@ Package.onUse(function(api) {
         'tracker',
         'check',
         'reactive-var',
-        'react-meteor-data@0.2.16',
+        'react-meteor-data@2.1.0',
         'cultofcoders:grapher@1.3.9_3',
         'tmeasday:check-npm-versions@0.3.2',
     ]);
